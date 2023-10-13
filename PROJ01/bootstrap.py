@@ -6,9 +6,9 @@ requests.packages.urllib3.disable_warnings()
 #disable InsecureRequestWarning for the Unverified HTTPS request - because we 'verify=False' in the request
 
 USERNAME="admin"
-PASSWORD="india@123"
+PASSWORD="pocadmin"
 
-login_url = 'https://192.168.174.50:8443/j_security_check'
+login_url = 'https://vmanage.dcloud.cisco.com:8443/j_security_check'
 login_data = {'j_username' : USERNAME, 'j_password' : PASSWORD}
 response = requests.post(url=login_url, data=login_data, verify=False)
 if response.content != b'':
@@ -16,13 +16,13 @@ if response.content != b'':
     exit()
 token1='JSESSIONID='+response.cookies.get_dict()['JSESSIONID']
 print ('token1=',token1)
-token_url='https://192.168.174.50:8443/dataservice/client/token'
+token_url='https://vmanage.dcloud.cisco.com:8443/dataservice/client/token'
 headers = {'Cookie': token1,'content-type':'application/json'}
 response = requests.get(url=token_url, headers=headers, verify=False)
 token2=response.text
 print ('token2=',token2)
 
-url = "https://192.168.174.50:8443/dataservice/system/device/bootstrap/device/CSR-7E1BD482-0565-E69B-1AFD-870AF3F868FE?configtype=cloudinit&inclDefRootCert=false&version=v1"
+url = "https://vmanage.dcloud.cisco.com:8443/dataservice/system/device/bootstrap/device/C8K-11E7C6ED-39EA-AABF-7829-5D02B848D302?configtype=cloudinit&inclDefRootCert=false&version=v1"
 
 payload = {}
 headers = {'Content-Type': "application/json",'Cookie': token1, 'X-XSRF-TOKEN': token2}
